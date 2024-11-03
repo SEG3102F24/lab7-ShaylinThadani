@@ -1,11 +1,17 @@
+// imports
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common'; 
+import { FormsModule } from '@angular/forms';
 import { AuthorService } from '../service/author.service';
 import { Author } from '../model/author';
-
+//component
 @Component({
   selector: 'app-author',
-  templateUrl: './author.component.html',
-  styleUrls: ['./author.component.css']
+  
+  templateUrl: './authors.component.html',
+  styleUrls: ['./authors.component.css'],
+  standalone: true, 
+  imports: [FormsModule, CommonModule]
 })
 export class AuthorComponent {
   authorId: number = 0;
@@ -16,12 +22,15 @@ export class AuthorComponent {
 
   getAuthor() {
     this.authorService.getAuthorById(this.authorId).subscribe({
+
       next: (data: Author) => {
         this.author = data;
+
         this.errorMessage = null;
       },
       error: () => {
         this.author = null;
+        
         this.errorMessage = 'Author not found';
       }
     });
